@@ -30,11 +30,13 @@ const Home: NextPage = () => {
   const {data: expiration} = useContractRead(contract, "expiration")
   const { mutateAsync: BuyTickets } = useContractWrite(contract, "BuyTickets")
   const {data: tickets} = useContractRead(contract, "getTickets")
-  const {data: winnings} = useContractRead(contract, "getWinningAddress", address)
+  const {data: winnings} = useContractRead(contract, "getWinningsForAddress", address)
   const { mutateAsync: WithdrawWinnings } = useContractWrite(contract, "WithdrawWinnings")
   const {data: lastWinner} = useContractRead(contract, "lastWinner")
   const {data: lastWinnerAmount} = useContractRead(contract, "lastWinnerAmount")
   const {data: isLotteryOperator} = useContractRead(contract, "lotteryOperator")
+
+  console.log('all winnings ', winnings)
 
   useEffect(() => {
     if(!tickets) return
@@ -186,8 +188,8 @@ const Home: NextPage = () => {
             </div>
             <button
             onClick={handleClick}
-            disabled={expiration?.toString() < Date.now().toString() ||
-            remainingTickets?.toNumber() === 0}
+            disabled={expiration?.toString() > Date.now().toString() ||
+            remainingTickets?.toNumber() !== 0}
             className='mt-5 w-full bg-gradient-to-br
             from-orange-500 to-emerald-600 px-10 py-5 rounded-md text-white
             shadow-xl disabled:from-gray-600 disabled:to-gray-600 

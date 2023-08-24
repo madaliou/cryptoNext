@@ -7,7 +7,7 @@ import { currency } from '../constants'
 
 function AdminControls() {
     const {contract, isLoading} = useContract(process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS)
-    const {data: totalCommission} = useContractRead(contract, "operatorTotalcommission")
+    const {data: totalCommission} = useContractRead(contract, "operatorTotalCommission")
     const {data: DrawWinnerTicket} = useContractRead(contract, "DrawWinnerTicket")
     const { mutateAsync: WithdrawCommission } = useContractWrite(contract, "WithdrawCommission")
     const { mutateAsync: RefundAll } = useContractWrite(contract, "RefundAll")
